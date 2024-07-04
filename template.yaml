@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: >
+  A template for deploying a Docker-based Go Lambda function with API Gateway.
+
+Resources:
+  GoFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      PackageType: Image
+      ImageUri: <account-id>.dkr.ecr.<region>.amazonaws.com/lambda-go-rest:latest
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: ANY
+            RestApiId: !Ref ApiGateway
+
+  ApiGateway:
+    Type: 'AWS::Serverless::Api'
+    Properties:
+      StageName: Prod
+
+Outputs:
+  ApiUrl:
+    Description: "URL for the API"
+    Value: !Sub "https://${ApiGateway}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
