@@ -10,9 +10,9 @@ A template for creating AWS Lambda REST APIs with Go, deployed using Docker. Thi
 - **Routing:** Handle routing within the Go application.
 - **MIT License:** Open-source and free to use.
 
-### Author
+## Author
 
-# Dennj Osele - dennj.osele@gmail.com
+Dennj Osele - dennj.osele@gmail.com
 
 ## Getting Started
 
@@ -22,28 +22,28 @@ A template for creating AWS Lambda REST APIs with Go, deployed using Docker. Thi
 - [AWS CLI](https://aws.amazon.com/cli/)
 - [Go](https://golang.org/dl/)
 
-### Clone the Repository
+## Clone the Repository
 
 ```bash
 git clone https://github.com/dennj/aws-lambda-go-rest-docker.git
 cd aws-lambda-go-rest-docker
 ```
 
-### Build and Run Locally
+## Build and Run Locally
 
-## Build the Docker Image
+### Build the Docker Image
 
 ```bash
 docker build --platform linux/amd64 -t docker-image:test .
 ```
 
-## Run the Docker Container
+### Run the Docker Container
 
 ```bash
 docker run -d -p 9000:9000 --name lambda-go docker-image:test
 ```
 
-## Test the Endpoints
+### Test the Endpoints
 
 ```bash
 curl -X GET "http://localhost:9000/v1/getinfo/12345"
@@ -53,29 +53,29 @@ curl -X GET "http://localhost:9000/v1/getinfo/12345"
 curl -X POST "http://localhost:9000/v1/set/12345/of/67890"
 ```
 
-### Stop the Docker Container
+## Stop the Docker Container
 
-## List Running Containers
+### List Running Containers
 
 ```bash
 docker ps
 ```
 
-## Stop the Container
+### Stop the Container
 
 ```bash
 docker stop lambda-go
 ```
 
-## Remove the Container
+### Remove the Container
 
 ```bash
 docker rm lambda-go
 ```
 
-### Deploy to AWS Lambda
+## Deploy to AWS Lambda
 
-## Push Docker Image to Amazon ECR
+### Push Docker Image to Amazon ECR
 
 ```bash
 aws ecr create-repository --repository-name lambda-go-rest
@@ -84,7 +84,7 @@ docker tag lambda-go-rest <account-id>.dkr.ecr.<region>.amazonaws.com/lambda-go-
 docker push <account-id>.dkr.ecr.<region>.amazonaws.com/lambda-go-rest:latest
 ```
 
-## Create Lambda Function
+### Create Lambda Function
 
 ```bash
 aws lambda create-function --function-name lambda-go \
@@ -93,13 +93,13 @@ aws lambda create-function --function-name lambda-go \
 --role <your-execution-role-arn>
 ```
 
-## Set Up Amazon API Gateway HTTP API
+### Set Up Amazon API Gateway HTTP API
 
 ```bash
 aws apigatewayv2 create-api --name "LambdaGoAPI" --protocol-type HTTP
 ```
 
-## Integrate Lambda
+### Integrate Lambda
 
 ```bash
 aws apigatewayv2 create-integration \
@@ -109,7 +109,7 @@ aws apigatewayv2 create-integration \
 --payload-format-version 2.0
 ```
 
-## Catch all routes
+### Catch all routes
 
 ```bash
 aws apigatewayv2 create-route \
@@ -118,13 +118,13 @@ aws apigatewayv2 create-route \
 --target "integrations/<integration-id>"
 ```
 
-## Deploy API
+### Deploy API
 
 ```bash
 aws apigatewayv2 create-deployment --api-id <api-id> --stage-name prod
 ```
 
-## Add Permissions for API Gateway to Invoke Lambda:
+### Add Permissions for API Gateway to Invoke Lambda:
 
 ```bash
 aws lambda add-permission --function-name lambda-go \
